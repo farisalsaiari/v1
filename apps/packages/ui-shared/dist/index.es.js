@@ -1,0 +1,396 @@
+import { options as q } from "preact";
+import { clsx as ne } from "clsx";
+var oe = 0;
+function d(e, t, r, n, s, l) {
+  t || (t = {});
+  var m, o, a = t;
+  if ("ref" in a) for (o in a = {}, t) o == "ref" ? m = t[o] : a[o] = t[o];
+  var u = { type: e, props: a, key: r, ref: m, __k: null, __: null, __b: 0, __e: null, __c: null, constructor: void 0, __v: --oe, __i: -1, __u: 0, __source: s, __self: l };
+  if (typeof e == "function" && (m = e.defaultProps)) for (o in m) a[o] === void 0 && (a[o] = m[o]);
+  return q.vnode && q.vnode(u), u;
+}
+function de({
+  variant: e = "primary",
+  size: t = "md",
+  disabled: r = !1,
+  loading: n = !1,
+  rounded: s = !0,
+  className: l,
+  children: m,
+  type: o = "button",
+  ...a
+}) {
+  const u = "inline-flex items-center justify-center font-medium transition-colors focus:outline-none  disabled:opacity-50 disabled:pointer-events-none", p = {
+    primary: "bg-[#1e73ff] text-white hover:bg-[#1e73ff]/80",
+    secondary: "bg-gray-200 text-gray-700 hover:bg-gray-300 ",
+    gray: "bg-gray-200 text-blue-700 font-semibold hover:bg-gray-300 ",
+    danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
+    ghost: "bg-transparent text-gray-700 hover:bg-gray-100",
+    bordered: "bg-transparent border-2 border-blue-600 text-blue-600 hover:bg-blue-50 "
+  }, v = {
+    sm: "px-3 h-8 text-[13px]",
+    md: "px-4 h-10 text-sm",
+    lg: "px-6 h-12 text-base"
+  }, c = s ? "rounded-md" : "rounded-none";
+  return /* @__PURE__ */ d(
+    "button",
+    {
+      type: o,
+      disabled: r || n,
+      className: ne(
+        u,
+        p[e],
+        v[t],
+        c,
+        l
+      ),
+      ...a,
+      children: m
+    }
+  );
+}
+var x, i, j, P, N = 0, G = [], _ = q, W = _.__b, U = _.__r, R = _.diffed, S = _.__c, V = _.unmount, D = _.__;
+function A(e, t) {
+  _.__h && _.__h(i, e, N || t), N = 0;
+  var r = i.__H || (i.__H = { __: [], __h: [] });
+  return e >= r.__.length && r.__.push({}), r.__[e];
+}
+function $(e) {
+  return N = 1, ie(X, e);
+}
+function ie(e, t, r) {
+  var n = A(x++, 2);
+  if (n.t = e, !n.__c && (n.__ = [X(void 0, t), function(o) {
+    var a = n.__N ? n.__N[0] : n.__[0], u = n.t(a, o);
+    a !== u && (n.__N = [u, n.__[1]], n.__c.setState({}));
+  }], n.__c = i, !i.__f)) {
+    var s = function(o, a, u) {
+      if (!n.__c.__H) return !0;
+      var p = n.__c.__H.__.filter(function(c) {
+        return !!c.__c;
+      });
+      if (p.every(function(c) {
+        return !c.__N;
+      })) return !l || l.call(this, o, a, u);
+      var v = n.__c.props !== o;
+      return p.forEach(function(c) {
+        if (c.__N) {
+          var w = c.__[0];
+          c.__ = c.__N, c.__N = void 0, w !== c.__[0] && (v = !0);
+        }
+      }), l && l.call(this, o, a, u) || v;
+    };
+    i.__f = !0;
+    var l = i.shouldComponentUpdate, m = i.componentWillUpdate;
+    i.componentWillUpdate = function(o, a, u) {
+      if (this.__e) {
+        var p = l;
+        l = void 0, s(o, a, u), l = p;
+      }
+      m && m.call(this, o, a, u);
+    }, i.shouldComponentUpdate = s;
+  }
+  return n.__N || n.__;
+}
+function L(e, t) {
+  var r = A(x++, 3);
+  !_.__s && Q(r.__H, t) && (r.__ = e, r.u = t, i.__H.__h.push(r));
+}
+function _e(e) {
+  return N = 5, J(function() {
+    return { current: e };
+  }, []);
+}
+function J(e, t) {
+  var r = A(x++, 7);
+  return Q(r.__H, t) && (r.__ = e(), r.__H = t, r.__h = e), r.__;
+}
+function I(e, t) {
+  return N = 8, J(function() {
+    return e;
+  }, t);
+}
+function ae() {
+  for (var e; e = G.shift(); ) if (e.__P && e.__H) try {
+    e.__H.__h.forEach(C), e.__H.__h.forEach(z), e.__H.__h = [];
+  } catch (t) {
+    e.__H.__h = [], _.__e(t, e.__v);
+  }
+}
+_.__b = function(e) {
+  i = null, W && W(e);
+}, _.__ = function(e, t) {
+  e && t.__k && t.__k.__m && (e.__m = t.__k.__m), D && D(e, t);
+}, _.__r = function(e) {
+  U && U(e), x = 0;
+  var t = (i = e.__c).__H;
+  t && (j === i ? (t.__h = [], i.__h = [], t.__.forEach(function(r) {
+    r.__N && (r.__ = r.__N), r.u = r.__N = void 0;
+  })) : (t.__h.forEach(C), t.__h.forEach(z), t.__h = [], x = 0)), j = i;
+}, _.diffed = function(e) {
+  R && R(e);
+  var t = e.__c;
+  t && t.__H && (t.__H.__h.length && (G.push(t) !== 1 && P === _.requestAnimationFrame || ((P = _.requestAnimationFrame) || ue)(ae)), t.__H.__.forEach(function(r) {
+    r.u && (r.__H = r.u), r.u = void 0;
+  })), j = i = null;
+}, _.__c = function(e, t) {
+  t.some(function(r) {
+    try {
+      r.__h.forEach(C), r.__h = r.__h.filter(function(n) {
+        return !n.__ || z(n);
+      });
+    } catch (n) {
+      t.some(function(s) {
+        s.__h && (s.__h = []);
+      }), t = [], _.__e(n, r.__v);
+    }
+  }), S && S(e, t);
+}, _.unmount = function(e) {
+  V && V(e);
+  var t, r = e.__c;
+  r && r.__H && (r.__H.__.forEach(function(n) {
+    try {
+      C(n);
+    } catch (s) {
+      t = s;
+    }
+  }), r.__H = void 0, t && _.__e(t, r.__v));
+};
+var B = typeof requestAnimationFrame == "function";
+function ue(e) {
+  var t, r = function() {
+    clearTimeout(n), B && cancelAnimationFrame(t), setTimeout(e);
+  }, n = setTimeout(r, 35);
+  B && (t = requestAnimationFrame(r));
+}
+function C(e) {
+  var t = i, r = e.__c;
+  typeof r == "function" && (e.__c = void 0, r()), i = t;
+}
+function z(e) {
+  var t = i;
+  e.__c = e.__(), i = t;
+}
+function Q(e, t) {
+  return !e || e.length !== t.length || t.some(function(r, n) {
+    return r !== e[n];
+  });
+}
+function X(e, t) {
+  return typeof t == "function" ? t(e) : t;
+}
+const K = {
+  primary: "bg-blue-600 text-white hover:bg-blue-700",
+  secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
+  danger: "bg-red-600 text-white hover:bg-red-700"
+};
+function me({
+  isOpen: e,
+  onClose: t,
+  title: r,
+  children: n,
+  closeOnOverlayClick: s = !0,
+  closeOnEscape: l = !0,
+  showCloseButton: m = !0,
+  showCancelButton: o = !0,
+  cancelButtonText: a = "Cancel",
+  buttonAlignment: u = "right",
+  showConfirmButton: p = !1,
+  confirmButtonText: v = "Confirm",
+  onConfirm: c,
+  confirmButtonVariant: w = "primary",
+  overlayOpacity: Y = 60,
+  width: h = "500px",
+  position: Z = "center",
+  animation: E = "slide"
+}) {
+  const [y, F] = $(e), [b, T] = $(!1), [se, ce] = $(!1), H = _e(null);
+  L(() => {
+    if (e)
+      F(!0), setTimeout(() => T(!0), 20);
+    else {
+      T(!1);
+      const f = setTimeout(() => {
+        F(!1);
+      }, 300);
+      return () => clearTimeout(f);
+    }
+  }, [e]);
+  const g = I(() => {
+    if (!b) return;
+    T(!1);
+    const f = setTimeout(() => {
+      t();
+    }, 300);
+    return () => clearTimeout(f);
+  }, [b, t]);
+  if (L(() => {
+    if (!y || !l) return;
+    const f = (k) => {
+      k.key === "Escape" && g();
+    };
+    return document.addEventListener("keydown", f), () => document.removeEventListener("keydown", f);
+  }, [y, l, g]), L(() => {
+    if (!y || !s) return;
+    const f = (k) => {
+      const M = H.current?.querySelector('div[role="dialog"]');
+      H.current && !H.current.contains(k.target) && M && !M.contains(k.target) && g();
+    };
+    return document.addEventListener("mousedown", f), () => {
+      document.removeEventListener("mousedown", f);
+    };
+  }, [y, s, g]), !y) return null;
+  const O = () => typeof h == "string" && ![
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "2xl",
+    "3xl",
+    "4xl",
+    "5xl",
+    "6xl",
+    "7xl",
+    "full"
+  ].includes(h) ? "" : {
+    sm: "28rem",
+    md: "32rem",
+    lg: "36rem",
+    xl: "42rem",
+    "2xl": "48rem",
+    "3xl": "56rem",
+    "4xl": "64rem",
+    "5xl": "72rem",
+    "6xl": "80rem",
+    "7xl": "88rem",
+    full: "100%"
+  }[h] || "32rem", ee = () => {
+    switch (Z) {
+      case "top":
+        return "items-start pt-8";
+      case "bottom":
+        return "items-end pb-4";
+      case "center":
+      default:
+        return "items-center";
+    }
+  }, te = () => {
+    if (b)
+      switch (E) {
+        case "slide":
+          return "translate-y-0 opacity-100";
+        case "fade":
+          return "opacity-100";
+        case "popup":
+          return "opacity-100 scale-100";
+        default:
+          return "";
+      }
+    else
+      switch (E) {
+        case "slide":
+          return "-translate-y-10 opacity-0";
+        case "fade":
+          return "opacity-0";
+        case "popup":
+          return "opacity-0 scale-95";
+        default:
+          return "";
+      }
+  }, re = I((f) => {
+    f.stopPropagation(), f.target === f.currentTarget && s && g();
+  }, [s, g]);
+  return /* @__PURE__ */ d(
+    "div",
+    {
+      ref: H,
+      className: `fixed inset-0 z-50 flex ${ee()} justify-center p-4 overflow-y-auto transition-opacity duration-300 ${b ? "opacity-100" : "opacity-0"}`,
+      style: {
+        pointerEvents: b ? "auto" : "none",
+        backgroundColor: `rgba(0, 0, 0, ${Y / 100})`
+      },
+      onClick: re,
+      children: /* @__PURE__ */ d(
+        "div",
+        {
+          role: "dialog",
+          "aria-modal": "true",
+          className: `bg-white rounded-lg shadow-xl transform transition-all duration-500 ease-out ${te()}`,
+          style: {
+            transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+            willChange: "transform, opacity",
+            transformOrigin: E === "popup" ? "center" : "top",
+            width: typeof h == "string" && ![
+              "sm",
+              "md",
+              "lg",
+              "xl",
+              "2xl",
+              "3xl",
+              "4xl",
+              "5xl",
+              "6xl",
+              "7xl",
+              "full"
+            ].includes(h) ? h.includes("%") || h.includes("px") || h.includes("rem") || h.includes("em") ? h : `${h}px` : "auto",
+            maxWidth: O() === "max-w-full" ? "none" : void 0
+          },
+          children: /* @__PURE__ */ d("div", { className: "p-6", children: [
+            /* @__PURE__ */ d("div", { className: "flex justify-between items-center mb-4", children: [
+              /* @__PURE__ */ d("h2", { className: "text-xl font-semibold text-gray-900", children: r }),
+              m && /* @__PURE__ */ d(
+                "button",
+                {
+                  onClick: g,
+                  className: "text-gray-500 rounded-md p-1.5 bg-gray-100 hover:bg-gray-200 hover:text-gray-500 focus:outline-none",
+                  "aria-label": "Close modal",
+                  children: /* @__PURE__ */ d(
+                    "svg",
+                    {
+                      className: "h-6 w-6",
+                      fill: "black",
+                      viewBox: "0 0 24 24",
+                      stroke: "currentColor",
+                      children: /* @__PURE__ */ d("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M6 18L18 6M6 6l12 12" })
+                    }
+                  )
+                }
+              )
+            ] }),
+            /* @__PURE__ */ d("div", { className: "text-gray-600", children: n }),
+            (o || p) && /* @__PURE__ */ d(
+              "div",
+              {
+                className: `mt-6 flex space-x-3 ${u === "right" ? "justify-end" : u === "center" ? "justify-center" : u === "space-between" ? "justify-between" : "justify-start"}`,
+                children: [
+                  o && /* @__PURE__ */ d(
+                    "button",
+                    {
+                      onClick: g,
+                      className: "px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200",
+                      children: a
+                    }
+                  ),
+                  p && c && /* @__PURE__ */ d(
+                    "button",
+                    {
+                      onClick: () => {
+                        c(), g();
+                      },
+                      className: `px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200 ${K[w] || K.primary}`,
+                      children: v
+                    }
+                  )
+                ]
+              }
+            )
+          ] })
+        }
+      )
+    }
+  );
+}
+export {
+  de as Button,
+  me as PopupModal
+};
