@@ -1,58 +1,15 @@
-
 import React, { useState } from 'react';
 import { Button, PopupModal } from '@v1/ui-shared';
+import { DashboardContent } from '../components/dashboard/DashboardContent';
 
-export interface HomeProps {
-    onToggleSidebar: () => void;
-    onToggleCollapse: () => void;
-    isCollapsed: boolean;
+
+export function Home({ }) {
+
+  return (
+    <div className="flex-1 overflow-y-auto bg-white">
+      <div className="p-4 md:p-6 max-w-7xl mx-auto w-full">
+        <DashboardContent title="Dashboard" />
+      </div>
+    </div>
+  )
 }
-
-export function Home({ }: HomeProps) {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const handleOpenModal = () => setIsModalOpen(true);
-    const handleCloseModal = () => setIsModalOpen(false);
-    const handleConfirm = () => {
-        console.log('Confirmed!');
-        handleCloseModal();
-    };
-
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-            <div className="text-center">
-                <h1 className="text-4xl font-bold text-gray-900 mb-8">Welcome to Dashboard App</h1>
-                <div className="space-x-4">
-                    <Button
-                        variant="bordered"
-                        size="lg"
-                        rounded={false}
-                        onClick={handleOpenModal}
-                        className="mb-4">
-                        Button
-                    </Button>
-                </div>
-            </div>
-
-            <PopupModal
-                isOpen={isModalOpen}
-                onClose={handleCloseModal}
-                title="Confirm Action"
-                width="55%"
-                position="top"
-                animation="slide"
-                showCloseButton={true}
-                closeOnOverlayClick={true}
-                closeOnEscape={true}
-                showCancelButton={true}
-                showConfirmButton={true}
-                onConfirm={handleConfirm}
-                buttonAlignment="left"
-                confirmButtonVariant="primary">
-                <p>Are you sure you want to proceed?</p>
-            </PopupModal>
-        </div>
-    )
-}
-
-export default Home

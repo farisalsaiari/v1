@@ -6,3 +6,4 @@ pnpm add -Dw @preact/preset-vite @vitejs/plugin-react
 pnpm add -Dw vite vite-plugin-dts typescript tailwindcss@3.4.10 postcss autoprefixer clsx
 
 pnpm add -Dw recharts @types/recharts
+ pnpm add -Dw lucide-react date-fns

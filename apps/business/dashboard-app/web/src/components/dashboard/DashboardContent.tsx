@@ -1,9 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, PopupModal } from '@b1/ui-shared';
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { ChevronDown, ChevronUp, MoreHorizontal, Calendar } from 'lucide-react';
-import { format } from 'date-fns';
+import { Button, PopupModal } from '@v1/ui-shared';
 import { DatePicker } from './DatePicker';
 import { DatePicker2 } from './DatePicker2';
 import { ModernDatePicker } from './ModernDatePicker';
@@ -261,22 +258,7 @@ export function DashboardContent({ }: HeaderProps) {
                         <div className="flex flex-wrap gap-2 mt-3 md:mt-0">
                             <div className="flex flex-wrap items-center gap-2">
                                 <div className="relative">
-                                    <button
-                                        type="button"
-                                        className="flex items-center border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium bg-white hover:bg-gray-50 transition-colors h-10"
-                                        onClick={() => setShowDatePicker(!showDatePicker)}
-                                    >
-                                        <Calendar className="w-4 h-4 text-gray-500 mr-2" />
-                                        <span className="font-semibold text-gray-800">{format(selectedDate, 'd MMM yyyy')}</span>
-                                        <svg
-                                            className={`w-4 h-4 ml-2 text-gray-400 transition-transform ${showDatePicker ? 'transform rotate-180' : ''}`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
+                                  
                                     {showDatePicker && (
                                         <div className="absolute left-0 md:left-auto md:right-0 mt-1 z-50" ref={datePickerRef}>
                                             <div className="w-[calc(100vw-2rem)] sm:w-[400px] max-w-[85vw]">
@@ -420,116 +402,7 @@ export function DashboardContent({ }: HeaderProps) {
 
                         <div className="w-full flex-1">
                             <div className="w-full h-40">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <AreaChart
-                                        data={[
-                                            { time: '8 AM', today: 0, yesterday: 0 },
-                                            { time: '9 AM', today: 150, yesterday: 100 },
-                                            { time: '10 AM', today: 300, yesterday: 250 },
-                                            { time: '11 AM', today: 450, yesterday: 400 },
-                                            { time: '12 PM', today: 300, yesterday: 500 },
-                                            { time: '1 PM', today: 600, yesterday: 400 },
-                                            { time: '2 PM', today: 700, yesterday: 450 },
-                                        ]}
-                                        margin={{ top: 15, right: 15, left: 0, bottom: 0 }}
-                                    >
-                                        <defs>
-                                            <linearGradient id="todayColor" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.1} />
-                                                <stop offset="100%" stopColor="#3B82F6" stopOpacity={0} />
-                                            </linearGradient>
-                                            <linearGradient id="yesterdayColor" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="0%" stopColor="#9CA3AF" stopOpacity={0.1} />
-                                                <stop offset="100%" stopColor="#9CA3AF" stopOpacity={0} />
-                                            </linearGradient>
-                                        </defs>
-                                        <CartesianGrid
-                                            strokeDasharray="3 3"
-                                            vertical={false}
-                                            stroke="#F3F4F6"
-                                        />
-                                        <XAxis
-                                            dataKey="time"
-                                            axisLine={false}
-                                            tickLine={false}
-                                            tick={{ fontSize: 12, fill: '#6B7280' }}
-                                            tickMargin={10}
-                                        />
-                                        <YAxis
-                                            axisLine={false}
-                                            tickLine={false}
-                                            tick={false}
-                                            width={0}
-                                            domain={[0, 'dataMax + 100']}
-                                        />
-                                        <Tooltip
-                                            contentStyle={{
-                                                backgroundColor: 'white',
-                                                borderRadius: '6px',
-                                                border: '1px solid #E5E7EB',
-                                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-                                                padding: '8px 12px',
-                                                fontSize: '12px',
-                                                fontWeight: 500,
-                                            }}
-                                            labelStyle={{
-                                                color: '#4B5563',
-                                                fontSize: '12px',
-                                                fontWeight: 600,
-                                                marginBottom: '4px',
-                                            }}
-                                            formatter={(value, name) => {
-                                                const isToday = name === 'today';
-                                                return [
-                                                    <span className="text-gray-900 font-medium">${value}</span>,
-                                                    <span className={`inline-flex items-center ${isToday ? 'text-blue-600' : 'text-gray-500'}`}>
-                                                        {isToday ? 'Today' : 'Yesterday'}
-                                                    </span>
-                                                ];
-                                            }}
-                                            labelFormatter={(label) => `Time: ${label}`}
-                                        />
-                                        <ReferenceLine y={0} stroke="#E5E7EB" />
-                                        <Area
-                                            name="Today"
-                                            type="monotone"
-                                            dataKey="today"
-                                            stroke="#3B82F6"
-                                            strokeWidth={2}
-                                            fillOpacity={1}
-                                            fill="url(#todayColor)"
-                                            dot={false}
-                                            activeDot={{
-                                                r: 4,
-                                                stroke: '#fff',
-                                                strokeWidth: 2,
-                                                fill: '#3B82F6',
-                                            }}
-                                            animationDuration={800}
-                                            animationEasing="ease-out"
-                                        />
-                                        <Area
-                                            name="Yesterday"
-                                            type="monotone"
-                                            dataKey="yesterday"
-                                            stroke="#9CA3AF"
-                                            strokeWidth={2}
-                                            strokeDasharray="4 2"
-                                            fillOpacity={1}
-                                            fill="url(#yesterdayColor)"
-                                            dot={false}
-                                            activeDot={{
-                                                r: 4,
-                                                stroke: '#fff',
-                                                strokeWidth: 2,
-                                                fill: '#9CA3AF',
-                                            }}
-                                            animationDuration={800}
-                                            animationEasing="ease-out"
-                                            animationBegin={150}
-                                        />
-                                    </AreaChart>
-                                </ResponsiveContainer>
+                               
                             </div>
                             <div className="flex justify-end space-x-4 text-xs mt-4">
                                 <span className="flex items-center bg-blue-50 px-3 py-1.5 rounded-md">
@@ -615,29 +488,7 @@ export function DashboardContent({ }: HeaderProps) {
                             <span className="text-2xl font-bold text-gray-800">$58,587.32</span>
                         </div>
 
-                        <div className="h-24 mb-6">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart
-                                    data={chartData}
-                                    margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-                                >
-                                    <defs>
-                                        <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.2} />
-                                            <stop offset="95%" stopColor="#3B82F6" stopOpacity={0.05} />
-                                        </linearGradient>
-                                    </defs>
-                                    <Area
-                                        type="monotone"
-                                        dataKey="value"
-                                        stroke="#3B82F6"
-                                        strokeWidth={2}
-                                        fillOpacity={1}
-                                        fill="url(#colorRevenue)"
-                                    />
-                                </AreaChart>
-                            </ResponsiveContainer>
-                        </div>
+                   
 
                         <div className="grid grid-cols-4 gap-4 pt-4 border-t border-gray-100">
                             <div>
@@ -682,29 +533,7 @@ export function DashboardContent({ }: HeaderProps) {
                             </div>
                         </div>
 
-                        <div className="h-24 mb-6">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart
-                                    data={chartData}
-                                    margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-                                >
-                                    <defs>
-                                        <linearGradient id="colorBanking" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#10B981" stopOpacity={0.2} />
-                                            <stop offset="95%" stopColor="#10B981" stopOpacity={0.05} />
-                                        </linearGradient>
-                                    </defs>
-                                    <Area
-                                        type="monotone"
-                                        dataKey="value"
-                                        stroke="#10B981"
-                                        strokeWidth={2}
-                                        fillOpacity={1}
-                                        fill="url(#colorBanking)"
-                                    />
-                                </AreaChart>
-                            </ResponsiveContainer>
-                        </div>
+                     
 
                         <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
                             <div>

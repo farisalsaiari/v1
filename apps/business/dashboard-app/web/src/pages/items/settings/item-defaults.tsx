@@ -1,10 +1,9 @@
-
-
-export function Help() {
+export function ItemDefaults() {
     return (
         <div className="flex flex-col flex-1 overflow-hidden">
-            <h2>Help</h2>
+            <h2>Item Defaults</h2>
         </div>
     )
 }
-export default Help
+
+export default ItemDefaults

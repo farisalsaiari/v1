@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { useState, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@v1/ui-shared';
-import {SpinnerLoader} from '../../components/loaders/SpinnerLoader';
+import { SpinnerLoader } from '../../components/loaders/SpinnerLoader';
 export function Login() {
 
-      const { isOnline } = useNetworkStatus();
+    const { isOnline } = useNetworkStatus();
     // UI State
     const [isPageLoading, setIsPageLoading] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
@@ -243,8 +243,7 @@ export function Login() {
                                             setPasswordError('');
                                             setIsPasswordFocused(false);
                                         }}
-                                        className="text-[var(--primary)] text-[14px] font-medium "
-                                    >
+                                        className="text-[var(--primary)] text-[14px] font-medium ">
                                         Change
                                     </button>
                                 </div>
@@ -252,28 +251,28 @@ export function Login() {
 
 
 
-                               {/* Network Status Indicator */}
-                {!isOnline && (
-                    <div className="rounded-md bg-red-50 p-4">
-                        <div className="flex">
-                            <div className="flex-shrink-0">
-                                <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clipRule="evenodd" />
-                                </svg>
-                            </div>
-                            <div className="ml-3">
-                                <h3 className="text-sm font-medium text-red-800">
-                                    You are currently offline
-                                </h3>
-                                <div className="mt-2 text-sm text-red-700">
-                                    <p>Please check your internet connection and try again.</p>
+                            {/* Network Status Indicator */}
+                            {!isOnline && (
+                                <div className="rounded-md bg-red-50 p-4">
+                                    <div className="flex">
+                                        <div className="flex-shrink-0">
+                                            <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clipRule="evenodd" />
+                                            </svg>
+                                        </div>
+                                        <div className="ml-3">
+                                            <h3 className="text-sm font-medium text-red-800">
+                                                You are currently offline
+                                            </h3>
+                                            <div className="mt-2 text-sm text-red-700">
+                                                <p>Please check your internet connection and try again.</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                            )}
 
-                            <form onSubmit={handleSignIn} className="space-y-4">
+                            <form onSubmit={handleSignIn} className="space-y-2">
                                 <div className="relative">
                                     <input
                                         type={showPassword ? "text" : "password"}
@@ -300,15 +299,12 @@ export function Login() {
                                             ? 'border-red-500 focus:ring-2 focus:ring-red-200 focus:border-red-500 focus:border-2'
                                             : 'focus:border-2 focus:border-[#1e73ff] focus:ring-0 focus:ring-inset focus:ring-[#1e73ff] focus:ring-opacity-20'
                                             } ${!password && !isPasswordFocused ? 'py-4' : 'pt-5 pb-3'}`}
-
-
                                     />
                                     <label
                                         className={`absolute left-4 transition-all duration-200 pointer-events-none ${isPasswordFocused || password
                                             ? 'text-[11px] text-gray-500 top-1.5 font-light'
                                             : 'text-gray-400/90 top-1/2 -translate-y-1/2 text-[15px] font-light'
-                                            } ${passwordError && !isPasswordFocused && !password ? 'text-red-500' : ''}`}
-                                    >
+                                            } ${passwordError && !isPasswordFocused && !password ? 'text-red-500' : ''}`}>
                                         Password
                                     </label>
                                     <button
@@ -334,9 +330,9 @@ export function Login() {
                                     </button>
                                 </div>
                                 {passwordError && (
-                                    <div className="flex items-center mt-1 text-red-500 text-sm">
+                                    <div className="flex items-center mt-0 text-red-500 text-sm">
                                         <div className="w-4 h-4 rounded-full border border-red-500 mr-1 flex items-center justify-center">
-                                            <span className="text-red-500 text-xs font-bold">!</span>
+                                            <span className="text-red-500 text-[xs] font-bold">!</span>
                                         </div>
                                         {passwordError}
                                     </div>
@@ -349,8 +345,7 @@ export function Login() {
                                         // Pre-fill the forgot password email with the current email
                                         setForgotPasswordEmail(email);
                                     }}
-                                    className="block text-right mt-1 text-[var(--primary)] text-[15px] font-semibold "
-                                >
+                                    className="block text-right pt-2 text-[var(--primary)] text-[15px] font-semibold ">
                                     Forgot password?
                                 </button>
 
@@ -379,7 +374,7 @@ export function Login() {
                             </form>
                         </div>
                     ) : showForgotPassword ? (
-                        <div className="space-y-6">
+                        <div className="space-y-4">
                             {!showSuccess && (
                                 <>
                                     <div className="mb-1">
@@ -489,7 +484,7 @@ export function Login() {
                                     } finally {
                                         setIsSending(false);
                                     }
-                                }} className="space-y-4">
+                                }} className="space-y-2">
                                     <div className="relative">
                                         <input
                                             type="text"

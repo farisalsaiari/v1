@@ -1,10 +1,9 @@
-
-
-export function Help() {
+export function Banking() {
     return (
         <div className="flex flex-col flex-1 overflow-hidden">
-            <h2>Help</h2>
+            <h2>Banking</h2>
         </div>
     )
 }
-export default Help
+
+export default Banking

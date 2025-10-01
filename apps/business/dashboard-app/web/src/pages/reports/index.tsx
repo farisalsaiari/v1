@@ -1,10 +1,9 @@
-
-
-export function Help() {
+export function Reports() {
     return (
         <div className="flex flex-col flex-1 overflow-hidden">
-            <h2>Help</h2>
+            <h2>Reports Dashboard</h2>
         </div>
     )
 }
-export default Help
+
+export default Reports
