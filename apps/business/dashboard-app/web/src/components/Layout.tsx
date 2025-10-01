@@ -48,22 +48,35 @@ export function Layout({
   if (isLoading) return <SpinnerLoader />;
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
-      <Sidebar
-        isOpen={isOpen}
-        isCollapsed={isCollapsed}
-        onToggleSidebar={onToggleSidebar}
-        onToggleCollapse={onToggleCollapse}
-      />
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Fixed Sidebar */}
+      <div 
+        className={`fixed left-0 top-0 bottom-0 z-10 transition-all duration-300 ease-in-out ${
+          isCollapsed ? 'w-20' : 'w-64'
+        }`}
+      >
+        <Sidebar
+          isOpen={isOpen}
+          isCollapsed={isCollapsed}
+          onToggleSidebar={onToggleSidebar}
+          onToggleCollapse={onToggleCollapse}
+        />
+      </div>
 
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <main className="flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6">
-          <div className="max-w-7xl mx-auto">
+      {/* Main Content */}
+      <div 
+        className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ease-in-out ${
+          isCollapsed ? 'ml-20' : 'ml-64'
+        }`}
+      >
+        <main className="flex-grow overflow-y-auto">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
             {/* Page Header */}
-            <div className="py-6">
+            {/* <div className="py-6">
               <h1 className="text-2xl font-bold text-gray-900">{pageInfo.title}</h1>
               <p className="mt-1 text-sm text-gray-500">{pageInfo.subtitle}</p>
-            </div>
+            </div> */}
 
             <div className={`transition-opacity duration-500 ${!hasLoadedOnce.current ? "opacity-0 animate-fade-slide" : "opacity-100"}`}>
               <Suspense fallback={pageLoaders[pageName] || <CardLoader />}>

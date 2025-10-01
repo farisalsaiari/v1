@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { SidebarProps } from "./types";
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { SidebarItem } from './types';
 import { IconComponent , sidebarData } from '../../data/sidebarData';
@@ -142,17 +142,62 @@ export function Sidebar({
   };
 
 
+  const [isHovered, setIsHovered] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  // Prevent wheel event from propagating to parent when hovering over sidebar
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (!isHovered) return;
+      
+      const sidebar = sidebarRef.current;
+      if (!sidebar) return;
+      
+      const isAtTop = sidebar.scrollTop === 0 && e.deltaY < 0;
+      const isAtBottom = sidebar.scrollHeight - sidebar.clientHeight <= sidebar.scrollTop + 1 && e.deltaY > 0;
+      
+      if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
+        e.preventDefault();
+      } else {
+        e.stopPropagation();
+      }
+    };
+
+    const sidebarElement = sidebarRef.current;
+    if (sidebarElement) {
+      sidebarElement.addEventListener('wheel', handleWheel, { passive: false });
+    }
+
+    return () => {
+      if (sidebarElement) {
+        sidebarElement.removeEventListener('wheel', handleWheel);
+      }
+    };
+  }, [isHovered]);
+
   return (
     <>
       {/* Mobile Overlay */}
       <div
         onClick={handleOverlayClick}
-        className={`fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
-        aria-hidden="true" />
+        className={`fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 lg:hidden ${
+          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        aria-hidden="true" 
+      />
 
       {/* Sidebar */}
-      <div className={`${isCollapsed ? 'w-[68px]' : 'w-[280px]'} bg-white border-r border-gray-200 flex flex-col h-screen transition-all duration-300 lg:relative lg:z-auto fixed left-0 top-0 z-40 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 sidebar-${transitionState} ${isCollapsed ? 'overflow-visible' : ''}`}>
+      <div 
+        ref={sidebarRef}
+        className={`${isCollapsed ? 'w-[68px]' : 'w-[280px]'} bg-white border-r border-gray-200 flex flex-col h-screen transition-all duration-300 fixed left-0 top-0 z-40 transform ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        } lg:translate-x-0 sidebar-${transitionState} ${
+          isCollapsed ? 'overflow-visible' : 'overflow-y-auto overflow-x-hidden custom-scrollbar'
+        }`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onWheelCapture={(e) => e.stopPropagation()}
+      >
 
         {/* Header */}
         <div className={`${isCollapsed ? ' h-[60px] p-4 border-gray-200 flex items-center' : ' h-[60px] p-6 border-gray-200 flex items-center'}`}>
@@ -191,7 +236,13 @@ export function Sidebar({
         </div>
         <div className="mx-4 h-px bg-gray-200 mb-3" />
         {/* Main Navigation - Scrollable */}
-        <div className={`flex-1 scrollbar-hide ${isCollapsed ? 'overflow-visible' : 'overflow-y-auto'}`}>
+        <div 
+          className={`flex-1 ${isCollapsed ? 'overflow-visible' : 'overflow-y-auto overflow-x-hidden custom-scrollbar'}`}
+          style={{
+            overflowX: 'hidden',
+            overflowY: isCollapsed ? 'visible' : 'auto',
+          }}
+        >
           <div className={`${isCollapsed ? 'px-3' : 'px-3'}  overflow-visible`}>
             <div key={currentMenuId} className={`relative w-full space-y-1 ${slideClasses} transition-transform duration-300`} >
 
