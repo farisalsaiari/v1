@@ -52,7 +52,7 @@ export function Layout({
       {/* Fixed Sidebar */}
       <div 
         className={`fixed left-0 top-0 bottom-0 z-10 transition-all duration-300 ease-in-out ${
-          isCollapsed ? 'w-20' : 'w-64'
+          isCollapsed ? 'w-[68px]' : 'w-[280px]'
         }`}
       >
         <Sidebar
@@ -66,7 +66,9 @@ export function Layout({
       {/* Main Content */}
       <div 
         className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ease-in-out ${
-          isCollapsed ? 'ml-20' : 'ml-64'
+          isOpen 
+            ? (isCollapsed ? 'lg:ml-[68px]' : 'lg:ml-[280px]') 
+            : 'lg:ml-0'
         }`}
       >
         <main className="flex-grow overflow-y-auto">

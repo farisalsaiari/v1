@@ -87,7 +87,8 @@ const DiningOptions = lazy(() => import("./pages/items/settings/dining-options")
 export function App() {
   const location = useLocation();
 
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  // Initialize sidebar as closed by default, especially for mobile
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen(prev => !prev);

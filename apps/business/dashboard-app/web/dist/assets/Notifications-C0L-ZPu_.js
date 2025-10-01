@@ -1,0 +1,1 @@
+import{u as i}from"./index-B6r6h-M4.js";function o(){return i("div",{className:"flex flex-col flex-1 overflow-hidden",children:i("h2",{children:"Notification Settings"})})}export{o as Notifications,o as default};
