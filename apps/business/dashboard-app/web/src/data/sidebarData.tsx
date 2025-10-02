@@ -420,6 +420,24 @@ export const sidebarData: SidebarItem[] = [
                         path: '/items/attributes',
                     },
                     {
+                        id: 'custom-attributes4',
+                        label: 'Custom 4',
+                        icon: 'attributes',
+                        path: '/items/attributes',
+                    },
+                    {
+                        id: 'custom-attributes2',
+                        label: 'Custom 2',
+                        icon: 'attributes',
+                        path: '/items/attributes',
+                    },
+                    {
+                        id: 'custom-attributes3',
+                        label: 'Custom 3',
+                        icon: 'attributes',
+                        path: '/items/attributes',
+                    },
+                    {
                         id: 'settings2',
                         label: 'Settings',
                         icon: 'settings',

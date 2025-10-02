@@ -2,6 +2,7 @@ import { Suspense, lazy, useState } from "react";
 import { Route, Routes, useLocation, Navigate } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { SpinnerLoader } from "./components/loaders/SpinnerLoader";
+import { Home } from "./pages/Home";
 
 // Lazy-loaded pages
 const Signup = lazy(() => import("./pages/auth/Signup"));
@@ -113,7 +114,7 @@ export function App() {
               onToggleSidebar={toggleSidebar}
               onToggleCollapse={toggleCollapse} />
           }>
-          <Route index element={<Dashboard />} />
+          <Route index element={<Home />} />
           <Route path="profile" element={<Profile />} />
           <Route path="help" element={<Help />} />
 

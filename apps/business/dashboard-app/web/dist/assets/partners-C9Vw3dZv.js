@@ -1,0 +1,1 @@
+import{u as r}from"./index-CA4Nvb-W.js";function l(){return r("div",{className:"flex flex-col flex-1 overflow-hidden",children:r("h2",{children:"Order Partners"})})}export{l as OrderPartners,l as default};

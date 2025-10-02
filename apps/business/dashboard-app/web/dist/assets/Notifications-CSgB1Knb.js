@@ -1,0 +1,1 @@
+import{u as i}from"./index-CA4Nvb-W.js";function o(){return i("div",{className:"flex flex-col flex-1 overflow-hidden",children:i("h2",{children:"Notification Settings"})})}export{o as Notifications,o as default};

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { SidebarProps } from "./types";
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { SidebarItem } from './types';
 import { IconComponent , sidebarData } from '../../data/sidebarData';
@@ -10,9 +10,10 @@ export function Sidebar({
   isCollapsed,
   onToggleSidebar,
   onToggleCollapse,
-  onNotificationClick,
-  onSupportClick,
-  onSettingsClick
+  onNotificationClick = () => {},
+  onSupportClick = () => {},
+  onSettingsClick = () => {},
+  setModalState = () => {}
 }: SidebarProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -140,67 +141,19 @@ export function Sidebar({
       onToggleSidebar();
     }
   };
-
-
-  const [isHovered, setIsHovered] = useState(false);
-  const sidebarRef = useRef<HTMLDivElement>(null);
-
-  // Prevent wheel event from propagating to parent when hovering over sidebar
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      if (!isHovered) return;
-      
-      const sidebar = sidebarRef.current;
-      if (!sidebar) return;
-      
-      const isAtTop = sidebar.scrollTop === 0 && e.deltaY < 0;
-      const isAtBottom = sidebar.scrollHeight - sidebar.clientHeight <= sidebar.scrollTop + 1 && e.deltaY > 0;
-      
-      if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
-        e.preventDefault();
-      } else {
-        e.stopPropagation();
-      }
-    };
-
-    const sidebarElement = sidebarRef.current;
-    if (sidebarElement) {
-      sidebarElement.addEventListener('wheel', handleWheel, { passive: false });
-    }
-
-    return () => {
-      if (sidebarElement) {
-        sidebarElement.removeEventListener('wheel', handleWheel);
-      }
-    };
-  }, [isHovered]);
-
   return (
     <>
       {/* Mobile Overlay */}
       <div
         onClick={handleOverlayClick}
-        className={`fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 lg:hidden ${
-          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-        aria-hidden="true" 
-      />
+        className={`fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        aria-hidden="true" />
 
       {/* Sidebar */}
-      <div 
-        ref={sidebarRef}
-        className={`${isCollapsed ? 'w-[68px]' : 'w-[280px]'} bg-white border-r border-gray-200 flex flex-col h-screen transition-all duration-300 fixed left-0 top-0 z-40 transform ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 sidebar-${transitionState} ${
-          isCollapsed ? 'overflow-visible' : 'overflow-y-auto overflow-x-hidden custom-scrollbar'
-        }`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onWheelCapture={(e) => e.stopPropagation()}
-      >
+      <div className={`${isCollapsed ? 'w-[68px]' : 'w-[280px]'} bg-white border-r border-gray-200 flex flex-col h-screen transition-all duration-300 lg:relative fixed left-0 top-0 z-40 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 sidebar-${transitionState} overflow-visible`} style={{ contain: 'layout style' }}>
 
-        {/* Header */}
-        <div className={`${isCollapsed ? ' h-[60px] p-4 border-gray-200 flex items-center' : ' h-[60px] p-6 border-gray-200 flex items-center'}`}>
+        {/* Header - Fixed at top */}
+        <div className={`flex-shrink-0 ${isCollapsed ? 'h-[60px] p-4' : 'h-[60px] p-6'} border-b border-gray-200 flex items-center`}>
           <div className={` pt-1 flex items-center w-full ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
             <div className="flex items-center gap-3">
               {!isCollapsed && (
@@ -236,14 +189,9 @@ export function Sidebar({
         </div>
         <div className="mx-4 h-px bg-gray-200 mb-3" />
         {/* Main Navigation - Scrollable */}
-        <div 
-          className={`flex-1 ${isCollapsed ? 'overflow-visible' : 'overflow-y-auto overflow-x-hidden custom-scrollbar'}`}
-          style={{
-            overflowX: 'hidden',
-            overflowY: isCollapsed ? 'visible' : 'auto',
-          }}
-        >
-          <div className={`${isCollapsed ? 'px-3' : 'px-3'}  overflow-visible`}>
+        {/* Scrollable content area */}
+        <div className="flex-1 overflow-hidden flex flex-col w-full">
+          <div className={`flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide ${isCollapsed ? 'px-3' : 'px-3'} w-full`}>
             <div key={currentMenuId} className={`relative w-full space-y-1 ${slideClasses} transition-transform duration-300`} >
 
 
@@ -445,11 +393,11 @@ export function Sidebar({
               </button>
               {/* Tooltip */}
               {isCollapsed ? (
-                <div className="absolute left-full ml-4 px-3 py-2 bg-gray-900 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-[9999] top-1/2 transform -translate-y-1/2 shadow-lg">
+                <div className="absolute left-full ml-4 px-3 py-2 bg-gray-900 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-[60] top-1/2 transform -translate-y-1/2 shadow-lg">
                   Notifications
                 </div>
               ) : (
-                <div className="absolute bottom-full mb-2 left-0 px-3 py-2 bg-gray-900 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-[9999] shadow-lg">
+                <div className="absolute bottom-full mb-2 left-0 px-3 py-2 bg-gray-900 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-[60] shadow-lg">
                   Notifications
                   {/* Triangle arrow pointing down - positioned to align with button */}
                   <div className="absolute top-full left-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-gray-900"></div>
@@ -532,64 +480,6 @@ export function Sidebar({
       </div>
 
 
-       {/* Mobile Bottom Fixed Footer */}
-            <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 flex items-center justify-between px-4 py-2 z-50 lg:hidden">
-                {/* Left: Burger menu and Home */}
-                <div className="flex items-center gap-0">
-                    <button
-                        onClick={onToggleSidebar}
-                        className="p-1.5 hover:bg-gray-100 rounded-lg lg:hidden">
-                        <svg className="w-6 h-6 text-gray-500" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                            <title>app-menu</title>
-                            <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                                <g id="app-main-menu" fill="currentColor" transform="translate(42.666667, 106.666667)">
-                                    <path d="M0,0 L426.666667,0 L426.666667,42.6666667 L0,42.6666667 Z M0,128 L426.666667,128 L426.666667,170.666667 L0,170.666667 Z M0,256 L426.666667,256 L426.666667,298.666667 L0,298.666667 Z" />
-                                </g>
-                            </g>
-                        </svg>
-                    </button>
-
-                    <Link to="/" className="flex items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-100">
-                        <span className="text-[15px] font-semibold text-gray-700">Home</span>
-                    </Link>
-                </div>
-                {/* Right: Desktop Bottom Buttons */}
-                <div className="flex items-center gap-2">
-                    {/* Notification */}
-                    <button className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-md transition-colors relative p-1">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="text-black">
-                            <path d="M18 17V11C18 8.39 16.33 6.18 14 5.35V5C14 3.9 13.1 3 12 3C10.9 3 10 3.9 10 5V5.35C7.67 6.18 6 8.39 6 11V17H4V19H10C10 20.1 10.9 21 12 21C13.1 21 14 20.1 14 19H20V17H18ZM8 17V11C8 8.79 9.79 7 12 7C14.21 7 16 8.79 16 11V17H8Z" />
-                        </svg>
-                        <span className="absolute top-[2px] right-[5px] w-2 h-2 rounded-full bg-blue-500"></span>
-                    </button>
-                    {/* search */}
-                    <button className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-md transition-colors relative p-1">
-                        <svg className='mt-' width="22" height="22" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16.6725 16.6412L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                    {/* Billing */}
-                    <button className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-md transition-colors relative p-1">
-                        <svg width="24" height="24" viewBox="0 0 23 23" fill="currentColor" aria-hidden="true" className="text-black">
-                            <path d="M19,4 C20.6569,4 22,5.34315 22,7 L22,17 C22,18.6569 20.6569,20 19,20 L5,20 C3.34315,20 2,18.6569 2,17 L2,7 C2,5.34315 3.34315,4 5,4 L19,4 Z M20,10 L4,10 L4,17 C4,17.51285 4.38604429,17.9355092 4.88337975,17.9932725 L5,18 L19,18 C19.51285,18 19.9355092,17.613973 19.9932725,17.1166239 L20,17 L20,10 Z M17,13 C17.5523,13 18,13.4477 18,14 C18,14.51285 17.613973,14.9355092 17.1166239,14.9932725 L17,15 L14,15 C13.4477,15 13,14.5523 13,14 C13,13.48715 13.386027,13.0644908 13.8833761,13.0067275 L14,13 L17,13 Z M19,6 L5,6 C4.44772,6 4,6.44772 4,7 L4,8 L20,8 L20,7 C20,6.44772 19.5523,6 19,6 Z" fill="#09244B" />
-                        </svg>
-                    </button>
-                    {/* Help & Support */}
-                    <button className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-md transition-colors relative p-1">
-                        <svg width="24" height="24" viewBox="0 0 23 23" fill="currentColor" aria-hidden="true" className="text-black">
-                            <path fillRule="evenodd" clipRule="evenodd" d="M12 3C7.04 3 3 7.04 3 12C3 16.96 7.04 21 12 21C16.96 21 21 16.96 21 12C21 7.04 16.96 3 12 3ZM12 19C8.14 19 5 15.86 5 12C5 8.14 8.14 5 12 5C15.86 5 19 8.14 19 12C19 15.86 15.86 19 12 19ZM12 17C12.6904 17 13.25 16.4404 13.25 15.75C13.25 15.0596 12.6904 14.5 12 14.5C11.3096 14.5 10.75 15.0596 10.75 15.75C10.75 16.4404 11.3096 17 12 17ZM9 9.75C9 8.23 10.35 7 12 7C13.65 7 15 8.23 15 9.75C15 10.86 14.34 11.52 13.81 12.04C13.28 12.57 13 12.87 13 13.5H11C11 12.0198 11.7993 11.2206 12.3883 10.6317L12.4 10.62C12.84 10.19 13 10.01 13 9.75C13 9.34 12.54 9 12 9C11.46 9 11 9.34 11 9.75H9Z" fill="black" />
-                        </svg>
-                    </button>
-                    {/* Settings */}
-                    <button className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-md transition-colors relative p-1">
-                        <svg width="24" height="24" viewBox="0 0 23 23" fill="currentColor" aria-hidden="true" className="text-black">
-                            <path d="M14 6C14 7.10457 13.1046 8 12 8C10.8954 8 10 7.10457 10 6C10 4.89543 10.8954 4 12 4C13.1046 4 14 4.89543 14 6Z" fill="#000000" />
-                            <path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" fill="#000000" />
-                            <path d="M14 18C14 19.1046 13.1046 20 12 20C10.8954 20 10 19.1046 10 18C10 16.8954 10.8954 16 12 16C13.1046 16 14 16.8954 14 18Z" fill="#000000" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
     </>
   );
 }

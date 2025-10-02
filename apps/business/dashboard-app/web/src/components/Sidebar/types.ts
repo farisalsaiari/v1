@@ -3,11 +3,11 @@ export interface SidebarProps {
   isCollapsed: boolean;
   onToggleSidebar: () => void;
   onToggleCollapse: () => void;
-  onNotificationClick?: () => void
-    onSupportClick?: () => void
-    onSettingsClick?: () => void
+  onNotificationClick?: () => void;
+  onSupportClick?: () => void;
+  onSettingsClick?: () => void;
+  setModalState?: (state: boolean) => void;
 }
-
 
 export interface SidebarItem {
     id: string;

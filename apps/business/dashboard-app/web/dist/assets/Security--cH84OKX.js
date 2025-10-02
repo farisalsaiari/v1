@@ -1,1 +1,0 @@
-import{u as e}from"./index-B6r6h-M4.js";function i(){return e("div",{className:"flex flex-col flex-1 overflow-hidden",children:e("h2",{children:"Security Settings"})})}export{i as Security,i as default};

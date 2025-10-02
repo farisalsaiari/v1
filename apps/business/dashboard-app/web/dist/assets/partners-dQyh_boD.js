@@ -1,1 +1,0 @@
-import{u as r}from"./index-B6r6h-M4.js";function l(){return r("div",{className:"flex flex-col flex-1 overflow-hidden",children:r("h2",{children:"Order Partners"})})}export{l as OrderPartners,l as default};

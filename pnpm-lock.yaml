@@ -103,6 +103,12 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/ui-shared
 
+  apps/business/merchant-app/web:
+    dependencies:
+      '@v1/ui-shared':
+        specifier: workspace:*
+        version: link:../../../packages/ui-shared
+
   apps/business/notifier-app/web:
     dependencies:
       '@v1/ui-shared':
